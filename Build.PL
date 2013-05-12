@@ -13,6 +13,15 @@ my $builder = Module::Build->new(
     },
     requires => {
         'perl' => 5.006,
+	'Moose' => 2.0802,
+	'MooseX::Params::Validate'	=> 0.18,
+	'Moose::Util::TypeConstraints'	=> 2.0802,
+	'namespace::clean'		=> 0.24,
+	'JSON'				=> 2.57,
+	'HTTP::Request'			=> 6.00,
+	'LWP::UserAgent'		=> 6.05
+		
+	 
     },
     add_to_cleanup      => [ 'GitHub-Jobs-*' ],
     create_makefile_pl => 'traditional',
