@@ -10,7 +10,7 @@ GitHub::Jobs - interface to the GitHub Jobs API.
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
@@ -29,7 +29,7 @@ use HTTP::Request;
 use LWP::UserAgent;
 
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 Readonly my $BASE_URL    => "http://jobs.github.com/positions.json";
 
@@ -54,11 +54,26 @@ around BUILDARGS => sub
  	}
 };
 
+=head1 SUBROUTINES/METHODS
+
+=head2 BUILD
+
+Check if description parameter is empty!
+
+=cut
+
 sub BUILD
 {
     my $self = shift;
     croak("ERROR: description must be specified.\n") unless ($self->description);
 }
+
+=head2 search
+
+Generate URL with parameters values and send HTTP Request!
+
+=cut
+
 
 sub search
 {
