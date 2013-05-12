@@ -16,9 +16,9 @@ name: GitHub-Jobs
 provides:
   GitHub::Jobs:
     file: lib/GitHub/Jobs.pm
-    version: 0.02
+    version: 0.03
 requires:
   perl: 5.006
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.02
+version: 0.03
