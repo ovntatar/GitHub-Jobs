@@ -18,6 +18,7 @@ my $builder = Module::Build->new(
 	'Moose::Util::TypeConstraints'	=> 2.0802,
 	'namespace::clean'		=> 0.24,
 	'JSON'				=> 2.57,
+	'Readonly'			=> 1.03,
 	'HTTP::Request'			=> 6.00,
 	'LWP::UserAgent'		=> 6.05
 		

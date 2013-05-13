@@ -10,7 +10,7 @@ GitHub::Jobs - interface to the GitHub Jobs API.
 
 =head1 VERSION
 
-Version 0.03
+Version 0.04
 
 =cut
 
@@ -29,7 +29,7 @@ use HTTP::Request;
 use LWP::UserAgent;
 
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 Readonly my $BASE_URL    => "http://jobs.github.com/positions.json";
 
