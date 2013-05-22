@@ -1,6 +1,6 @@
 GitHub-Jobs
 
-Module implementation of a interface to the GitHub Jobs API
+Perl wrapper for the GitHub Jobs API
 
 INSTALLATION
 
