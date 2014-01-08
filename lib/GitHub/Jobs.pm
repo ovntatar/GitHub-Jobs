@@ -22,37 +22,37 @@ use namespace::clean;
 use Carp;
 use Data::Dumper;
 
-
 use JSON;
 use Readonly;
 use HTTP::Request;
 use LWP::UserAgent;
 
-
 our $VERSION = '0.05';
 
-Readonly my $BASE_URL    => "http://jobs.github.com/positions.json";
+Readonly my $BASE_URL => "http://jobs.github.com/positions.json";
 
-type 'TrueFalse'   	=> where { /\btrue\b|\bfalse\b/i };
-has  'description'      => (is => 'ro', isa => 'Str', required => 1);
-has  'full_time'     	=> (is => 'rw', isa => 'TrueFalse');
-has  'location' 	=> (is => 'ro', isa => 'Str');
-has  'page'             => (is => 'ro', isa => 'Str');
-has  'lat'		=> (is => 'ro', isa => 'Str');
-has  'long'		=> (is => 'ro', isa => 'Str');
-has  'browser'		=> (is => 'rw', isa => 'LWP::UserAgent', default => sub { return LWP::UserAgent->new(); });
+type 'TrueFalse' => where { /\btrue\b|\bfalse\b/i };
+has 'description' => ( is => 'ro', isa => 'Str', required => 1 );
+has 'full_time'   => ( is => 'rw', isa => 'TrueFalse' );
+has 'location'    => ( is => 'ro', isa => 'Str' );
+has 'page'        => ( is => 'ro', isa => 'Str' );
+has 'lat'         => ( is => 'ro', isa => 'Str' );
+has 'long'        => ( is => 'ro', isa => 'Str' );
+has 'browser'     => (
+    is      => 'rw',
+    isa     => 'LWP::UserAgent',
+    default => sub { return LWP::UserAgent->new(); }
+);
 
-
-around BUILDARGS => sub
-{
-	my $orig  = shift;
-	my $class = shift;
-	if (@_ == 1 && ! ref $_[0])
-	{
-	  	return $class->$orig(description => $_[1]);
- 	}  else {
-		return $class->$orig(@_);
- 	}
+around BUILDARGS => sub {
+    my $orig  = shift;
+    my $class = shift;
+    if ( @_ == 1 && !ref $_[0] ) {
+        return $class->$orig( description => $_[1] );
+    }
+    else {
+        return $class->$orig(@_);
+    }
 };
 
 =head1 SUBROUTINES/METHODS
@@ -63,10 +63,10 @@ Check if description parameter is empty!
 
 =cut
 
-sub BUILD
-{
+sub BUILD {
     my $self = shift;
-    croak("ERROR: description must be specified.\n") unless ($self->description);
+    croak("ERROR: description must be specified.\n")
+      unless ( $self->description );
 }
 
 =head2 search
@@ -75,32 +75,30 @@ Generate URL with parameters values and send HTTP Request!
 
 =cut
 
+sub search {
+    my $self = shift;
+    my ( $browser, $url, $request, $response, $content );
+    $browser = $self->browser;
+    $url = sprintf( "%s?description=%s", $BASE_URL, $self->description );
+    $url .= sprintf( "&full_time=%s", $self->full_time ) if $self->full_time;
+    $url .= sprintf( "&location=%s",  $self->location )  if $self->location;
+    $url .= sprintf( "&lat=%s",       $self->lat )       if $self->lat;
+    $url .= sprintf( "&long=%s",      $self->long )      if $self->long;
+    $url .= sprintf( "&page=%s",      $self->page )      if $self->page;
+    $request = HTTP::Request->new( GET => $url );
+    $response = $browser->request($request);
 
-sub search
-{
-	my $self    = shift;
-	my ($browser, $url, $request, $response, $content);
-	$browser   = $self->browser;
-	$url	= sprintf("%s?description=%s", $BASE_URL, $self->description);
-	$url	.= sprintf("&full_time=%s", $self->full_time) if $self->full_time;
-	$url	.= sprintf("&location=%s", $self->location) if $self->location;
-	$url	.= sprintf("&lat=%s", $self->lat) if $self->lat;
-	$url	.= sprintf("&long=%s", $self->long) if $self->long;
-	$url    .= sprintf("&page=%s", $self->page) if $self->page;
-	$request  = HTTP::Request->new(GET => $url);
-	$response = $browser->request($request);
-
-	croak("ERROR: Couldn't fetch data [$url]:[".$response->status_line."]\n") unless $response->is_success;
-	$content  = $response->content;
-	croak("ERROR: No data found.\n") unless defined $content;
-	return $content;
+    croak(
+        "ERROR: Couldn't fetch data [$url]:[" . $response->status_line . "]\n" )
+      unless $response->is_success;
+    $content = $response->content;
+    croak("ERROR: No data found.\n") unless defined $content;
+    return $content;
 }
 
 __PACKAGE__->meta->make_immutable;
 no Moose;
 no Moose::Util::TypeConstraints;
-
-
 
 =head1 SYNOPSIS
 
@@ -198,4 +196,4 @@ See http://dev.perl.org/licenses/ for more information.
 
 =cut
 
-1; # End of GitHub::Jobs
+1;    # End of GitHub::Jobs
