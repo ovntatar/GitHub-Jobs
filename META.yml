@@ -16,7 +16,7 @@ name: GitHub-Jobs
 provides:
   GitHub::Jobs:
     file: lib/GitHub/Jobs.pm
-    version: 0.04
+    version: 0.05
 requires:
   HTTP::Request: 6
   JSON: 2.57
@@ -29,4 +29,4 @@ requires:
   perl: 5.006
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.04
+version: 0.05

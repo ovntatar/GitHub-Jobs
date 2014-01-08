@@ -10,7 +10,7 @@ GitHub::Jobs - This module is a wrapper around the GitHub Jobs API.
 
 =head1 VERSION
 
-Version 0.04
+Version 0.05
 
 =cut
 
@@ -29,7 +29,7 @@ use HTTP::Request;
 use LWP::UserAgent;
 
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 Readonly my $BASE_URL    => "http://jobs.github.com/positions.json";
 
