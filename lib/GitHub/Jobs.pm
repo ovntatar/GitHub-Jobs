@@ -51,7 +51,7 @@ around BUILDARGS => sub
 	{
 	  	return $class->$orig(description => $_[1]);
  	}  else {
-		  return $class->$orig(@_);
+		return $class->$orig(@_);
  	}
 };
 
